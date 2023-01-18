@@ -4,5 +4,7 @@
     "description": "Movie Recommendation"
   },
   "letsFindAMovie": "Let's find a movie",
-  "getStarted": "Get Started"
+  "letsStartWithAGenre": "Let's start with a genre",
+  "getStarted": "Get Started",
+  "continueText": "Continue"
 }

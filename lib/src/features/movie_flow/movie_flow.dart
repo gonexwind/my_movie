@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_movie/src/features/movie_flow/landing/landing_page.dart';
 
+import 'genre/genre_page.dart';
+
 class MovieFlow extends StatefulWidget {
   const MovieFlow({Key? key}) : super(key: key);
 
@@ -38,6 +40,8 @@ class _MovieFlowState extends State<MovieFlow> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         LandingPage(nextPage: nextPage, previousPage: previousPage),
+        GenrePage(nextPage: nextPage, previousPage: previousPage),
+
         Scaffold(body: Container(color: Colors.lightBlueAccent)),
         Scaffold(body: Container(color: Colors.amberAccent)),
         Scaffold(body: Container(color: Colors.greenAccent)),
