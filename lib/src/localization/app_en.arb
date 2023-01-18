@@ -2,5 +2,7 @@
   "appTitle": "My Movie",
   "@appTitle": {
     "description": "Movie Recommendation"
-  }
+  },
+  "letsFindAMovie": "Let's find a movie",
+  "getStarted": "Get Started"
 }

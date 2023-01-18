@@ -5,6 +5,7 @@ class CustomTheme {
   static ThemeData darkTheme(BuildContext context) {
     final theme = Theme.of(context);
     return ThemeData(
+      appBarTheme: const AppBarTheme(color: Palette.almostBlack),
       brightness: Brightness.dark,
       primaryColor: MaterialColor(Palette.red500.value, const {
         100: Palette.red100,
