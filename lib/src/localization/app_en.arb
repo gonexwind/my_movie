@@ -1,6 +1,6 @@
 {
-  "appTitle": "my_movie",
+  "appTitle": "My Movie",
   "@appTitle": {
-    "description": "The title of the application"
+    "description": "Movie Recommendation"
   }
 }
