@@ -5,6 +5,11 @@
   },
   "letsFindAMovie": "Let's find a movie",
   "letsStartWithAGenre": "Let's start with a genre",
+  "selectMinimumRating": "Select a minimum rating\nranging from 1-10",
+  "howManyYears": "How many years back should we check for?",
   "getStarted": "Get Started",
-  "continueText": "Continue"
+  "yesPlease": "Yes please",
+  "continueText": "Continue",
+  "yearsBack": "Years back",
+  "amazing": "Amazing"
 }

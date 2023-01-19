@@ -7,7 +7,7 @@ class CustomTheme {
     return ThemeData(
       appBarTheme: const AppBarTheme(color: Palette.almostBlack),
       brightness: Brightness.dark,
-      primaryColor: MaterialColor(
+      primarySwatch: MaterialColor(
         Palette.red500.value,
         const {
           100: Palette.red100,
@@ -36,6 +36,14 @@ class CustomTheme {
         style: TextButton.styleFrom(
           backgroundColor: Palette.red500,
         ),
+      ),
+      sliderTheme: SliderThemeData(
+        activeTrackColor: Colors.white,
+        inactiveTrackColor: Colors.grey.shade800,
+        thumbColor: Colors.white,
+        valueIndicatorColor: Palette.red500,
+        inactiveTickMarkColor: Colors.transparent,
+        activeTickMarkColor: Colors.transparent,
       ),
     );
   }

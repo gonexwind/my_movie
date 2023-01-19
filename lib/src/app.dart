@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
       // Define a dark color theme.
       darkTheme: CustomTheme.darkTheme(context),
       themeMode: ThemeMode.dark,
-
       // Define a home screen of the app.
       home: const MovieFlow(),
     );
