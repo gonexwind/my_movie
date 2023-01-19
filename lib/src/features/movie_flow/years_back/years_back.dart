@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_movie/src/features/movie_flow/result/result_page.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/widgets/primary_button.dart';
@@ -61,7 +62,7 @@ class _YearsBackPageState extends State<YearsBackPage> {
             ),
             const Spacer(),
             PrimaryButton(
-              onPressed: widget.nextPage,
+              onPressed: () => Navigator.of(context).push(ResultPage.route()),
               text: l10n.amazing,
             ),
             const SizedBox(height: kMediumSpacing),
