@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../movie_flow_controller.dart';
 
-class LandingPage extends StatelessWidget {
-  const LandingPage({
-    Key? key,
-    required this.nextPage,
-    required this.previousPage,
-  }) : super(key: key);
-
-  final VoidCallback nextPage;
-  final VoidCallback previousPage;
+class LandingPage extends ConsumerWidget {
+  const LandingPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final state = ref.read(movieFlowControllerProvider.notifier);
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -31,7 +27,7 @@ class LandingPage extends StatelessWidget {
             Image.asset('assets/images/landing_hero.png'),
             const Spacer(),
             PrimaryButton(
-              onPressed: nextPage,
+              onPressed: state.nextPage,
               text: l10n.getStarted,
             ),
             const SizedBox(height: kMediumSpacing),

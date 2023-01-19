@@ -1,31 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:my_movie/src/core/constants.dart';
-import 'package:my_movie/src/features/movie_flow/genre/genre.dart';
-import 'package:my_movie/src/features/movie_flow/result/movie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_movie/src/core/constants.dart';
+import 'package:my_movie/src/features/movie_flow/result/movie.dart';
 
 import '../../../core/widgets/primary_button.dart';
+import '../movie_flow_controller.dart';
 
-class ResultPage extends StatelessWidget {
+class ResultPage extends ConsumerWidget {
   const ResultPage({Key? key}) : super(key: key);
 
   static route({bool fullscreenDialog = true}) =>
-      MaterialPageRoute(builder: (context) => ResultPage());
+      MaterialPageRoute(builder: (context) => const ResultPage());
 
   final double movieHeight = 150;
-  final movie = const Movie(
-    title: 'Wednesday',
-    overview:
-        'While attending Nevermore Academy, Wednesday Addams attempts to master her emerging psychic ability, thwart a killing spree and solve the mystery that embroiled her parents 25 years ago.',
-    voteAverage: 4.8,
-    genres: [Genre(name: 'Mystery'), Genre(name: 'Supernatural')],
-    releaseDate: '2020-05024',
-    backdropPath: '',
-    posterPath: '',
-  );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -36,12 +27,12 @@ class ResultPage extends StatelessWidget {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    CoverImage(),
+                    const CoverImage(),
                     Positioned(
                       width: MediaQuery.of(context).size.width,
                       bottom: -(movieHeight / 2),
                       child: MovieImageDetails(
-                        movie: movie,
+                        movie: ref.watch(movieFlowControllerProvider).movie,
                         movieHeight: movieHeight,
                       ),
                     ),
@@ -51,7 +42,7 @@ class ResultPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
-                    movie.overview,
+                    ref.watch(movieFlowControllerProvider).movie.overview,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
@@ -75,7 +66,7 @@ class CoverImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(minHeight: 298),
+      constraints: const BoxConstraints(minHeight: 298),
       child: ShaderMask(
         shaderCallback: (rect) {
           return LinearGradient(
@@ -88,7 +79,7 @@ class CoverImage extends StatelessWidget {
           ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
         },
         blendMode: BlendMode.dstIn,
-        child: Placeholder(),
+        child: const Placeholder(),
       ),
     );
   }
@@ -112,9 +103,9 @@ class MovieImageDetails extends StatelessWidget {
           SizedBox(
             width: 100,
             height: movieHeight,
-            child: Placeholder(),
+            child: const Placeholder(),
           ),
-          SizedBox(width: kMediumSpacing),
+          const SizedBox(width: kMediumSpacing),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

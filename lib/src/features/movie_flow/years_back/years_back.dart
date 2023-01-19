@@ -1,33 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_movie/src/features/movie_flow/result/result_page.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../movie_flow_controller.dart';
 
-class YearsBackPage extends StatefulWidget {
-  const YearsBackPage({
-    Key? key,
-    required this.nextPage,
-    required this.previousPage,
-  }) : super(key: key);
-
-  final VoidCallback nextPage;
-  final VoidCallback previousPage;
+class YearsBackPage extends ConsumerWidget {
+  const YearsBackPage({Key? key}) : super(key: key);
 
   @override
-  State<YearsBackPage> createState() => _YearsBackPageState();
-}
-
-class _YearsBackPageState extends State<YearsBackPage> {
-  double yearsBack = 10;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
+    final state = ref.read(movieFlowControllerProvider.notifier);
+
     return Scaffold(
-      appBar: AppBar(leading: BackButton(onPressed: widget.previousPage)),
+      appBar: AppBar(leading: BackButton(onPressed: state.previousPage)),
       body: Center(
         child: Column(
           children: [
@@ -41,7 +31,7 @@ class _YearsBackPageState extends State<YearsBackPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  yearsBack.ceil().toString(),
+                  ref.watch(movieFlowControllerProvider).yearsBack.toString(),
                   style: theme.textTheme.headline2,
                 ),
                 Text(
@@ -54,8 +44,9 @@ class _YearsBackPageState extends State<YearsBackPage> {
             ),
             const Spacer(),
             Slider(
-              onChanged: (value) => setState(() => yearsBack = value),
-              value: yearsBack,
+              onChanged: (value) => state.updateYearsBack(value.toInt()),
+              value:
+                  ref.watch(movieFlowControllerProvider).yearsBack.toDouble(),
               min: 0,
               max: 70,
               divisions: 70,

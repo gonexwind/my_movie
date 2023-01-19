@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../movie_flow_controller.dart';
 
-class RatingPage extends StatefulWidget {
-  const RatingPage({
-    Key? key,
-    required this.nextPage,
-    required this.previousPage,
-  }) : super(key: key);
-
-  final VoidCallback nextPage;
-  final VoidCallback previousPage;
+class RatingPage extends ConsumerWidget {
+  const RatingPage({Key? key}) : super(key: key);
 
   @override
-  State<RatingPage> createState() => _RatingPageState();
-}
-
-class _RatingPageState extends State<RatingPage> {
-  double rating = 5;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
+    final state = ref.read(movieFlowControllerProvider.notifier);
+
     return Scaffold(
-      appBar: AppBar(leading: BackButton(onPressed: widget.previousPage)),
+      appBar: AppBar(leading: BackButton(onPressed: state.previousPage)),
       body: Center(
         child: Column(
           children: [
@@ -39,7 +29,7 @@ class _RatingPageState extends State<RatingPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  rating.ceil().toString(),
+                  ref.watch(movieFlowControllerProvider).rating.toString(),
                   style: theme.textTheme.headline2,
                 ),
                 const Icon(
@@ -51,15 +41,15 @@ class _RatingPageState extends State<RatingPage> {
             ),
             const Spacer(),
             Slider(
-              onChanged: (value) => setState(() => rating = value),
-              value: rating,
+              onChanged: (value) => state.updateRating(value.toInt()),
+              value: ref.watch(movieFlowControllerProvider).rating.toDouble(),
               min: 1,
               max: 10,
               divisions: 10,
             ),
             const Spacer(),
             PrimaryButton(
-              onPressed: widget.nextPage,
+              onPressed: state.nextPage,
               text: l10n.yesPlease,
             ),
             const SizedBox(height: kMediumSpacing),
