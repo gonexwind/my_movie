@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:my_movie/src/features/movie_flow/genre/genre.dart';
+import 'package:my_movie/src/features/movie_flow/result/movie_entity.dart';
 
 class Movie extends Equatable {
   final String title;
@@ -19,6 +20,21 @@ class Movie extends Equatable {
     this.backdropPath,
     this.posterPath,
   });
+
+  factory Movie.fromEntity(MovieEntity entity, List<Genre> genres) {
+    return Movie(
+      title: entity.title,
+      overview: entity.overview,
+      voteAverage: entity.voteAverage,
+      genres: genres
+          .where((genre) => entity.genreIds.contains(genre.id))
+          .toList(growable: false),
+      releaseDate: entity.releaseDate,
+      backdropPath:
+          'https://image.tmdb.org/t/p/original/${entity.backdropPath}',
+      posterPath: 'https://image.tmdb.org/t/p/original/${entity.posterPath}',
+    );
+  }
 
   Movie.initial()
       : title = '',
