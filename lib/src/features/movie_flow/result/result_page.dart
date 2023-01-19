@@ -5,6 +5,7 @@ import 'package:my_movie/src/core/constants.dart';
 import 'package:my_movie/src/features/movie_flow/result/movie.dart';
 
 import '../../../core/widgets/primary_button.dart';
+import '../landing/landing_page.dart';
 import '../movie_flow_controller.dart';
 
 class ResultPage extends ConsumerWidget {
@@ -17,51 +18,58 @@ class ResultPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
+    return ref.watch(movieFlowControllerProvider).movie.when(
+          data: (movie) => Scaffold(
+            appBar: AppBar(),
+            body: Column(
               children: [
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    const CoverImage(),
-                    Positioned(
-                      width: MediaQuery.of(context).size.width,
-                      bottom: -(movieHeight / 2),
-                      child: MovieImageDetails(
-                        movie: ref.watch(movieFlowControllerProvider).movie,
-                        movieHeight: movieHeight,
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          CoverImage(movie: movie),
+                          Positioned(
+                            width: MediaQuery.of(context).size.width,
+                            bottom: -(movieHeight / 2),
+                            child: MovieImageDetails(
+                              movie: movie,
+                              movieHeight: movieHeight,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: movieHeight / 2),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    ref.watch(movieFlowControllerProvider).movie.overview,
-                    style: Theme.of(context).textTheme.bodyText2,
+                      SizedBox(height: movieHeight / 2),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          movie.overview,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                PrimaryButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  text: AppLocalizations.of(context)!.findAnotherMovie,
+                ),
+                const SizedBox(height: kMediumSpacing),
               ],
             ),
           ),
-          PrimaryButton(
-            onPressed: () => Navigator.of(context).pop(),
-            text: AppLocalizations.of(context)!.findAnotherMovie,
-          ),
-          const SizedBox(height: kMediumSpacing),
-        ],
-      ),
-    );
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, s) =>
+              Text(AppLocalizations.of(context)!.somethingWhenWrong),
+        );
   }
 }
 
 class CoverImage extends StatelessWidget {
-  const CoverImage({Key? key}) : super(key: key);
+  const CoverImage({Key? key, required this.movie}) : super(key: key);
+
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +87,11 @@ class CoverImage extends StatelessWidget {
           ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
         },
         blendMode: BlendMode.dstIn,
-        child: const Placeholder(),
+        child: Image.network(
+          movie.backdropPath ?? '',
+          fit: BoxFit.cover,
+          errorBuilder: (context, e, s) => const SizedBox(),
+        ),
       ),
     );
   }
@@ -103,7 +115,11 @@ class MovieImageDetails extends StatelessWidget {
           SizedBox(
             width: 100,
             height: movieHeight,
-            child: const Placeholder(),
+            child: Image.network(
+              movie.posterPath ?? '',
+              fit: BoxFit.cover,
+              errorBuilder: (context, e, s) => const SizedBox(),
+            ),
           ),
           const SizedBox(width: kMediumSpacing),
           Expanded(
@@ -118,10 +134,14 @@ class MovieImageDetails extends StatelessWidget {
                   movie.genresCommaSeparated,
                   style: theme.textTheme.bodyText2,
                 ),
+                Text(
+                  movie.releaseDate,
+                  style: theme.textTheme.bodyText2,
+                ),
                 Row(
                   children: [
                     Text(
-                      '4.8',
+                      movie.voteAverage.toString(),
                       style: theme.textTheme.bodyText2?.copyWith(
                         color:
                             theme.textTheme.bodyText2?.color?.withOpacity(0.62),

@@ -53,7 +53,14 @@ class YearsBackPage extends ConsumerWidget {
             ),
             const Spacer(),
             PrimaryButton(
-              onPressed: () => Navigator.of(context).push(ResultPage.route()),
+              onPressed: () async {
+                await ref
+                    .read(movieFlowControllerProvider.notifier)
+                    .getRecommendedMovie();
+                Navigator.of(context).push(ResultPage.route());
+              },
+              isLoading:
+                  ref.watch(movieFlowControllerProvider).movie is AsyncLoading,
               text: l10n.amazing,
             ),
             const SizedBox(height: kMediumSpacing),

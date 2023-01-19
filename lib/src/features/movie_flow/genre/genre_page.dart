@@ -27,23 +27,29 @@ class GenrePage extends ConsumerWidget {
               style: theme.textTheme.headline5,
             ),
             Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  final genre =
-                      ref.watch(movieFlowControllerProvider).genres[index];
-                  return ListCard(
-                    genre: genre,
-                    onTap: () => state.toggleSelected(genre),
-                  );
-                },
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: kListItemSpacing),
-                itemCount: ref.watch(movieFlowControllerProvider).genres.length,
-                padding: const EdgeInsets.symmetric(vertical: kListItemSpacing),
-              ),
+              child: ref.watch(movieFlowControllerProvider).genres.when(
+                    data: (genres) => ListView.separated(
+                      itemBuilder: (context, index) {
+                        final genre = genres[index];
+                        return ListCard(
+                          genre: genre,
+                          onTap: () => state.toggleSelected(genre),
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: kListItemSpacing),
+                      itemCount: genres.length,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: kListItemSpacing),
+                    ),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (e, s) => Text(l10n.somethingWhenWrong),
+                  ),
             ),
             PrimaryButton(
-              onPressed: state.nextPage,
+              onPressed:
+                  ref.read(movieFlowControllerProvider.notifier).nextPage,
               text: l10n.continueText,
             ),
             const SizedBox(height: kMediumSpacing),
