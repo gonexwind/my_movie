@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_movie/src/core/constants.dart';
+import 'package:my_movie/src/core/failure.dart';
+import 'package:my_movie/src/core/widgets/failure_screen.dart';
 import 'package:my_movie/src/core/widgets/primary_button.dart';
 import 'package:my_movie/src/features/movie_flow/genre/list_card.dart';
 
@@ -44,7 +46,12 @@ class GenrePage extends ConsumerWidget {
                     ),
                     loading: () =>
                         const Center(child: CircularProgressIndicator()),
-                    error: (e, s) => Text(l10n.somethingWhenWrong),
+                    error: (e, s) {
+                      if (e is Failure) {
+                        return FailureScreen(message: e.message);
+                      }
+                      return FailureScreen(message: l10n.somethingWhenWrong);
+                    },
                   ),
             ),
             PrimaryButton(

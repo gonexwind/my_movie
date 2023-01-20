@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_movie/src/core/constants.dart';
 import 'package:my_movie/src/features/movie_flow/result/movie.dart';
 
+import '../../../core/failure.dart';
+import '../../../core/widgets/failure_screen.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../landing/landing_page.dart';
 import '../movie_flow_controller.dart';
@@ -60,8 +62,13 @@ class ResultPage extends ConsumerWidget {
             ),
           ),
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, s) =>
-              Text(AppLocalizations.of(context)!.somethingWhenWrong),
+          error: (e, s) {
+            if (e is Failure) {
+              return FailureScreen(message: e.message);
+            }
+            return FailureScreen(
+                message: AppLocalizations.of(context)!.somethingWhenWrong);
+          },
         );
   }
 }
