@@ -30,19 +30,21 @@ class GenrePage extends ConsumerWidget {
             ),
             Expanded(
               child: ref.watch(movieFlowControllerProvider).genres.when(
-                    data: (genres) => ListView.separated(
-                      itemBuilder: (context, index) {
-                        final genre = genres[index];
-                        return ListCard(
-                          genre: genre,
-                          onTap: () => state.toggleSelected(genre),
-                        );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: kListItemSpacing),
-                      itemCount: genres.length,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: kListItemSpacing),
+                    data: (genres) => Scrollbar(
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          final genre = genres[index];
+                          return ListCard(
+                            genre: genre,
+                            onTap: () => state.toggleSelected(genre),
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: kListItemSpacing),
+                        itemCount: genres.length,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: kListItemSpacing),
+                      ),
                     ),
                     loading: () =>
                         const Center(child: CircularProgressIndicator()),

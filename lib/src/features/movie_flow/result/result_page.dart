@@ -6,6 +6,7 @@ import 'package:my_movie/src/features/movie_flow/result/movie.dart';
 
 import '../../../core/failure.dart';
 import '../../../core/widgets/failure_screen.dart';
+import '../../../core/widgets/network_fading_image.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../landing/landing_page.dart';
 import '../movie_flow_controller.dart';
@@ -94,11 +95,7 @@ class CoverImage extends StatelessWidget {
           ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
         },
         blendMode: BlendMode.dstIn,
-        child: Image.network(
-          movie.backdropPath ?? '',
-          fit: BoxFit.cover,
-          errorBuilder: (context, e, s) => const SizedBox(),
-        ),
+        child: NetworkFadingImage(path: movie.backdropPath ?? ''),
       ),
     );
   }
@@ -122,11 +119,7 @@ class MovieImageDetails extends StatelessWidget {
           SizedBox(
             width: 100,
             height: movieHeight,
-            child: Image.network(
-              movie.posterPath ?? '',
-              fit: BoxFit.cover,
-              errorBuilder: (context, e, s) => const SizedBox(),
-            ),
+            child: NetworkFadingImage(path: movie.posterPath ?? ''),
           ),
           const SizedBox(width: kMediumSpacing),
           Expanded(
