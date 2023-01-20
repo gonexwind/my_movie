@@ -44,9 +44,11 @@ class MyApp extends StatelessWidget {
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context)!.appTitle,
 
-      // Define a dark color theme.
-      darkTheme: CustomTheme.darkTheme(context),
+      // Define a theme.
+      theme: ThemeData(fontFamily: 'Poppins'),
       themeMode: ThemeMode.dark,
+      darkTheme: CustomTheme.darkTheme(context),
+
       // Define a home screen of the app.
       home: const MovieFlow(),
     );
