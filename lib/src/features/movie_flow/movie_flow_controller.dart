@@ -12,7 +12,7 @@ final movieFlowControllerProvider =
     MovieFlowState(
       pageController: PageController(),
       movie: AsyncValue.data(Movie.initial()),
-      genres: AsyncValue.data([]),
+      genres: const AsyncValue.data([]),
     ),
     ref.watch(movieServiceProvider),
   ),
