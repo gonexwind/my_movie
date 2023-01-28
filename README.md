@@ -1,30 +1,30 @@
-# my_movie
+# My Movie
 
-Movie Reccomendation
+Movie Recommendation
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application that follows the
-[simple app state management
-tutorial](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple).
+- Localizations
+- Clean and Simple UI
+- Dark Mode
+- Testing
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📸 Screenshots
 
-## Assets
+||||
+|:--------------------------------------|:---:|----:|
+| ![](assets/screenshot/onboarding.jpg) | ![](assets/screenshot/genres.jpg) | ![](assets/screenshot/rating.jpg)|
+| ![](assets/screenshot/yearsback.jpg)  | ![](assets/screenshot/result.jpg) | ![]()|
 
-The `assets` directory houses images, fonts, and any other files you want to
-include with your application.
+## Built With 🛠
 
-The `assets/images` directory contains [resolution-aware
-images](https://flutter.dev/docs/development/ui/assets-and-images#resolution-aware).
-
-## Localization
-
-This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
-
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter
-apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
+- Flutter
+    - equatable: ^2.0.5
+    - flutter_riverpod: ^2.1.3
+    - dio: ^4.0.6
+    - multiple_result: ^4.0.0
+    - flutter_launcher_icons: ^0.11.0
+    - mocktail: ^0.3.0
+- Unit Testing
+- UI Testing
+- Integrating Testing
