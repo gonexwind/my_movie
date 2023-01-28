@@ -27,4 +27,4 @@ Movie Recommendation
     - mocktail: ^0.3.0
 - Unit Testing
 - UI Testing
-- Integrating Testing
+- Integration Testing
